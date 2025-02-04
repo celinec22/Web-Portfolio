@@ -1,10 +1,8 @@
-"use client";
-import { useState } from "react";
 import Dashboard from "./components/Dashboard";
 import NavBar from "./components/Navbar";
 import StockTable from "./components/ProjectTable";
 import Trending from "./components/Trending";
-
+import AboutMe from "./components/AboutMe";
 export default function Home() {
   return (
     <>
@@ -15,6 +13,9 @@ export default function Home() {
             <Dashboard />
             <div className="w-1/4 p-4">
               <Trending />
+            </div>
+            <div className="w-1/4 p-4">
+              <AboutMe />
             </div>
           </div>
 
