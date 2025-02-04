@@ -9,6 +9,9 @@ export default function NavBar() {
           Home
         </a>
         <a href="#" className="text-gray-300 hover:text-green-500 font-bold">
+          Skills
+        </a>
+        <a href="#" className="text-gray-300 hover:text-green-500 font-bold">
           About
         </a>
         <a href="#" className="text-gray-300 hover:text-green-500 font-bold">
