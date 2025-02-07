@@ -1,35 +1,24 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  LineChart,
-  Line,
-  Tooltip,
-  ResponsiveContainer,
-  ReferenceLine,
-} from "recharts";
+import { LineChart, Line, ResponsiveContainer } from "recharts";
 
-export default function RepoCommitGraph() {
+export default function RepoCommitGraph({ repoName, owner }) {
   const [commitData, setCommitData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [selectedRange, setSelectedRange] = useState("1W");
 
   useEffect(() => {
     async function fetchCommits() {
       const query = `
         query {
-          viewer {
-            repositories(first: 100, affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER]) {
-              nodes {
-                name
-                defaultBranchRef {
-                  target {
-                    ... on Commit {
-                      history(first: 100, since: "2024-01-01T00:00:00Z") {
-                        edges {
-                          node {
-                            committedDate
-                          }
-                        }
+          repository(owner: "${owner}", name: "${repoName}") {
+            isPrivate
+            defaultBranchRef {
+              target {
+                ... on Commit {
+                  history(first: 100, since: "2024-01-01T00:00:00Z") {
+                    edges {
+                      node {
+                        committedDate
                       }
                     }
                   }
@@ -40,55 +29,60 @@ export default function RepoCommitGraph() {
         }
       `;
 
-      const response = await fetch("https://api.github.com/graphql", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query }),
-      });
-
-      const data = await response.json();
-
-      if (data.errors) {
-        console.error("Error fetching commits:", data.errors);
-        return;
-      }
-
-      let allCommits = [];
-      data.data.viewer.repositories.nodes.forEach((repo) => {
-        if (!repo.defaultBranchRef) return;
-
-        repo.defaultBranchRef.target.history.edges.forEach((commit) => {
-          const date = commit.node.committedDate.substring(0, 10);
-          const existing = allCommits.find((entry) => entry.date === date);
-          if (existing) {
-            existing.commits += 1;
-          } else {
-            allCommits.push({ date, commits: 1 });
-          }
+      try {
+        const response = await fetch("https://api.github.com/graphql", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query }),
         });
-      });
 
-      allCommits.sort((a, b) => new Date(a.date) - new Date(b.date));
+        const data = await response.json();
 
-      let cumulative = 0;
-      allCommits = allCommits.map((entry) => {
-        cumulative += entry.commits;
-        return { ...entry, commits: cumulative };
-      });
+        if (data.errors) {
+          console.error("GraphQL Error:", data.errors);
+          return;
+        }
 
-      setCommitData(allCommits);
-      filterData("1Y", allCommits);
+        let allCommits = [];
+
+        const repo = data.data.repository;
+        if (repo?.defaultBranchRef) {
+          repo.defaultBranchRef.target.history.edges.forEach((commit) => {
+            const date = commit.node.committedDate.substring(0, 10);
+            const existing = allCommits.find((entry) => entry.date === date);
+            if (existing) {
+              existing.commits += 1;
+            } else {
+              allCommits.push({ date, commits: 1 });
+            }
+          });
+
+          allCommits.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+          let cumulative = 0;
+          allCommits = allCommits.map((entry) => {
+            cumulative += entry.commits;
+            return { ...entry, commits: cumulative };
+          });
+
+          setCommitData(allCommits);
+          filterData("1Y", allCommits);
+        }
+      } catch (error) {
+        console.error("Error fetching commits:", error);
+      }
     }
 
-    fetchCommits();
-  }, []);
+    if (repoName) {
+      fetchCommits();
+    }
+  }, [repoName, owner]);
 
   function filterData(range, data) {
     const now = new Date();
-    let filtered = [];
     let pastDate = new Date();
 
     if (range === "1W") pastDate.setDate(now.getDate() - 7);
@@ -96,13 +90,11 @@ export default function RepoCommitGraph() {
     else if (range === "1Y") pastDate.setFullYear(now.getFullYear() - 1);
     else pastDate = new Date("2024-01-01");
 
-    filtered = data.filter((d) => new Date(d.date) >= pastDate);
-    setFilteredData(filtered);
-    setSelectedRange(range);
+    setFilteredData(data.filter((d) => new Date(d.date) >= pastDate));
   }
 
   return (
-    <ResponsiveContainer width="20%" height={50}>
+    <ResponsiveContainer width={200} height={100}>
       <LineChart data={filteredData}>
         <Line
           type="monotone"
