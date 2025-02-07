@@ -156,7 +156,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-4 mt-16 bg-black flex flex-col items-left">
-      <h1 className="text-2xl text-gray-300 font-bold mb-4 p-4">
+      <h1 id="Home" className="text-2xl text-gray-300 font-bold mb-4 p-4">
         Github Commits{" "}
         <p className="mt-2">
           <span

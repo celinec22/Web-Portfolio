@@ -1,6 +1,9 @@
 export default function Footer() {
   return (
-    <div className="bg-gray-600 text-white flex justify-between items-center p-4">
+    <div
+      id="Footer"
+      className="bg-gray-600 text-white flex justify-between items-center p-4"
+    >
       <a href="mailto:cchahine@umich.edu" className="hover:opacity-80">
         <img
           src="/email.png"
