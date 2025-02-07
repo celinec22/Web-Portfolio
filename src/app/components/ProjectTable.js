@@ -86,7 +86,7 @@ const TableComponent = () => {
                             Code
                           </button>
                           <button className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900">
-                            Demo Video
+                            Demo
                           </button>
                         </div>
                       </td>

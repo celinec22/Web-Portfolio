@@ -3,6 +3,7 @@ import NavBar from "./components/Navbar";
 import StockTable from "./components/ProjectTable";
 import Trending from "./components/Trending";
 import AboutMe from "./components/AboutMe";
+import Footer from "./components/Footer";
 export default function Home() {
   return (
     <>
@@ -21,12 +22,13 @@ export default function Home() {
 
           <div className="w-1/2 p-4">
             <div className="flex flex-col mt-20">
-              <div className="fixed top-20 max-h-screen overflow-y-auto">
+              <div className="fixed top-20 h-[500px] mb-20 overflow-y-auto">
                 <StockTable />
               </div>
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

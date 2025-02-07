@@ -16,7 +16,9 @@ export default function Trending() {
 
   return (
     <div className="overflow-hidden w-[1000px] h-[200px] rounded-sm mt-10 ">
-      <h1 className="text-xl font-bold mb-2">Trending Skills</h1>
+      <h1 id="trending" className="text-xl font-bold mb-2">
+        Trending Skills
+      </h1>
       <hr className="mb-4" />
       <div className="flex flex-wrap gap-2">
         {skills.map((skill, index) => (

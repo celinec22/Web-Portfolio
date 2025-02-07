@@ -8,7 +8,10 @@ export default function NavBar() {
         <a href="#" className="text-gray-300 hover:text-green-500 font-bold">
           Home
         </a>
-        <a href="#" className="text-gray-300 hover:text-green-500 font-bold">
+        <a
+          href="#trending"
+          className="text-gray-300 hover:text-green-500 font-bold"
+        >
           Skills
         </a>
         <a href="#" className="text-gray-300 hover:text-green-500 font-bold">
