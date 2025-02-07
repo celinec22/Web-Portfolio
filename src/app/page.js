@@ -9,7 +9,7 @@ export default function Home() {
       <div className="min-h-screen overflow-hidden bg-black text-gray-300 font-capsule">
         <NavBar />
         <div className="w-full mx-auto flex">
-          <div className="w-[1500px] p-4">
+          <div className="w-[2100px] p-4">
             <Dashboard />
             <div className="w-1/4 p-4">
               <Trending />
@@ -20,8 +20,10 @@ export default function Home() {
           </div>
 
           <div className="w-1/2 p-4">
-            <div className="flex flex-col mt-20 items-center sticky top-20">
-              <StockTable />
+            <div className="flex flex-col mt-20">
+              <div className="fixed top-20 max-h-screen overflow-y-auto">
+                <StockTable />
+              </div>
             </div>
           </div>
         </div>
