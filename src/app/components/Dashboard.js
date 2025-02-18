@@ -84,7 +84,7 @@ export default function Dashboard() {
       });
 
       setCommitData(allCommits);
-      filterData("1W", allCommits);
+      filterData("1Y", allCommits);
     }
 
     fetchCommits();
@@ -92,18 +92,17 @@ export default function Dashboard() {
 
   function filterData(range, data) {
     const now = new Date();
-    let pastDate = new Date(now);
+    let filtered = [];
+    let pastDate = new Date();
 
     if (range === "1W") pastDate.setDate(now.getDate() - 7);
     else if (range === "1M") pastDate.setMonth(now.getMonth() - 1);
     else if (range === "1Y") pastDate.setFullYear(now.getFullYear() - 1);
     else pastDate = new Date("2024-01-01");
 
-    const filtered = data.filter((d) => new Date(d.date) >= pastDate);
+    filtered = data.filter((d) => new Date(d.date) >= pastDate);
     setFilteredData(filtered);
     setSelectedRange(range);
-
-    console.log(`Filtering for ${range}:`, filtered);
 
     const currentTotal = filtered.length
       ? filtered[filtered.length - 1].commits
@@ -116,6 +115,7 @@ export default function Dashboard() {
     setPercentageChange(((currentTotal - pastTotal) / (pastTotal || 1)) * 100);
   }
 
+  // Function to gradually update the total commits
   const setTotalCommitsWithAnimation = (newTotal) => {
     const interval = 50;
     const step = 1;
@@ -214,7 +214,7 @@ export default function Dashboard() {
       </ResponsiveContainer>
 
       <div className="flex space-x-4 mb-[0px] ml-2 text-sm font-bold ">
-        {["1W", "1M", "1Y"].map((range) => (
+        {["1W", "1M", "1Y", "All"].map((range) => (
           <button
             key={range}
             onClick={() => filterData(range, commitData)}
@@ -227,6 +227,19 @@ export default function Dashboard() {
             {range}
           </button>
         ))}
+      </div>
+
+      <div className="flex flex-col space-y-2">
+        <hr className="border-gray-600" />
+
+        <div className="flex flex-row justify-between">
+          <h1 className="font-capsule text-sm text-gray-300 font-bold p-4">
+            Commit Power{" "}
+          </h1>
+          <h1 className="font-capsule text-gray-300 font-bold p-4">∞ </h1>
+        </div>
+
+        <hr className="border-gray-600" />
       </div>
     </div>
   );
