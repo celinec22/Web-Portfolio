@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <div
       id="Footer"
-      className="bg-gray-600 text-white flex justify-between items-center p-4"
+      className="bg-gray-600 text-white flex justify-center items-center p-4 space-x-16"
     >
       <a href="mailto:cchahine@umich.edu" className="hover:opacity-80">
         <img
@@ -18,7 +18,7 @@ export default function Footer() {
       >
         <img
           src="/github.png"
-          className="w-6 h-6 hover:opacity-100 hover:scale-110 transition-all"
+          className="w-6 h-6 hover:opacity-100 hover:scale-110 transition-all filter brightness-95"
         />
       </a>
       <a

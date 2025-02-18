@@ -230,7 +230,7 @@ export default function Dashboard() {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <hr className="bg-gray-300 h-[1px] border-0" />
+        <hr className="border-gray-600" />
 
         <div className="flex flex-row justify-between">
           <h1 className="font-capsule text-sm text-gray-300 font-bold p-4">
@@ -239,7 +239,7 @@ export default function Dashboard() {
           <h1 className="font-capsule text-gray-300 font-bold p-4">∞ </h1>
         </div>
 
-        <hr className="bg-gray-300 h-[1px] border-0" />
+        <hr className="border-gray-600" />
       </div>
     </div>
   );

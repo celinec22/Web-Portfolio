@@ -19,7 +19,7 @@ export default function Trending() {
       <h1 id="trending" className="text-xl font-bold mb-2">
         Trending Skills
       </h1>
-      <hr className="mb-4" />
+      <hr className="mb-4 border-gray-600" />
       <div className="flex flex-wrap gap-2">
         {skills.map((skill, index) => (
           <button
@@ -35,7 +35,7 @@ export default function Trending() {
           </button>
         ))}
       </div>
-      <hr className="mt-10" />
+      <hr className="mt-10 border-gray-600" />
     </div>
   );
 }

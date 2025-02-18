@@ -25,9 +25,9 @@ const projectRepoMap = {
     owner: "hebz26",
     description: "A password manager for securely storing login credentials.",
   },
-  FibSequence: {
-    repo: "FibonacciSequence",
-    owner: "celinec22",
+  NarcanVM: {
+    repo: "narcan-alert",
+    owner: "AliBdeir",
     description: "An app to generate and display Fibonacci sequences.",
   },
   ePortfolio: {
@@ -45,7 +45,7 @@ const TableComponent = () => {
   };
 
   return (
-    <div className="overflow-hidden w-[300px] h-[700px] rounded-sm border border-gray-600">
+    <div className="overflow-auto w-[300px] max-h-[650px] rounded-sm border border-gray-600 overflow-y">
       <table className="min-w-full bg-black text-gray-300 rounded-lg">
         <thead>
           <tr>

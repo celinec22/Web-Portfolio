@@ -4,15 +4,16 @@ export default function AboutMe() {
       <h1 id="AboutMe" className="text-xl font-bold mb-2">
         About Me
       </h1>
-      <hr className="mb-4" />
-      <p className="text-gray-300">
-        Hi! My name is Celine. I am a currently a Student at the University of
-        Michigan - Dearborn studying software engineering. I have always had a
-        passion for building and problem solving, and through development it has
-        allowed me to do just that. Some of my other interests are math and
-        finance and I also love playing tennis!
+      <hr className="border-gray-600 mb-4" />
+
+      <p className="text-gray-300 text-base/8 font-bold">
+        Hi! My name is Celine. I’m a student at the University of Michigan -
+        Dearborn, majoring in Software Engineering. I’ve always been passionate
+        about building and problem-solving, and development has given me the
+        perfect outlet to do both. Beyond coding, I have a strong interest in
+        math and finance, and I also love playing tennis!
       </p>
-      <hr className="mt-10" />
+      <hr className="mt-8 border-gray-600" />
     </div>
   );
 }
