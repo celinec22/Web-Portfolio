@@ -7,6 +7,7 @@ const projectRepoMap = {
     repo: "NutriScan",
     owner: "celinec22",
     description: "A nutrition scanning app to track food and nutrition data.",
+    code: "https://github.com/celinec22/NutriScan",
   },
   ReplenX: {
     repo: "HealthCare_Pill_Tracker",
@@ -14,11 +15,12 @@ const projectRepoMap = {
     description:
       "A pill tracking app to remind users of their medication schedules.",
   },
-  CRCBuild: {
+  CRCBuilder: {
     repo: "CRC-Card-Builder",
-    owner: "oo-ng",
+    owner: "celinec22",
     description:
       "A tool for building CRC (Class Responsibility Collaboration) cards for software design.",
+    code: "https://github.com/celinec22/CRC-Card-Builder",
   },
   MyPass: {
     repo: "mypass-manager",
@@ -34,6 +36,7 @@ const projectRepoMap = {
     repo: "Web-Portfolio",
     owner: "celinec22",
     description: "An online portfolio showcasing personal projects and skills.",
+    code: "https://github.com/celinec22/Web-Portfolio",
   },
 };
 
@@ -42,10 +45,11 @@ const TableComponent = () => {
 
   const handleArrowClick = (projectName) => {
     setOpenProject(openProject === projectName ? null : projectName);
+    console.log(setOpenProject);
   };
 
   return (
-    <div className="overflow-auto w-[300px] max-h-[650px] rounded-sm border border-gray-600 overflow-y">
+    <div className="overflow-auto w-full h-full rounded-sm border border-gray-600 overflow-y">
       <table className="min-w-full bg-black text-gray-300 rounded-lg">
         <thead>
           <tr>
@@ -68,7 +72,15 @@ const TableComponent = () => {
                       onClick={() => handleArrowClick(displayName)}
                       className="text-gray-300 focus:outline-none"
                     >
-                      {openProject === displayName ? "▼" : "►"}
+                      <span
+                        className={
+                          openProject === displayName
+                            ? "text-white-500"
+                            : "text-green-500"
+                        }
+                      >
+                        {openProject === displayName ? "▼" : "▲"}
+                      </span>
                     </button>
                   </td>
                 </tr>

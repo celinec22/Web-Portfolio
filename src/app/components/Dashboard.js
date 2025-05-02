@@ -214,7 +214,7 @@ export default function Dashboard() {
       </ResponsiveContainer>
 
       <div className="flex space-x-4 mb-[0px] ml-2 text-sm font-bold ">
-        {["1W", "1M", "1Y", "All"].map((range) => (
+        {["1W", "1M", "1Y"].map((range) => (
           <button
             key={range}
             onClick={() => filterData(range, commitData)}

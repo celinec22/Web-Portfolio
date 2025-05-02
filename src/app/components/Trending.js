@@ -15,7 +15,7 @@ export default function Trending() {
   ];
 
   return (
-    <div className="overflow-hidden w-[1000px] h-[200px] rounded-sm mt-10 ">
+    <div className="overflow-hidden rounded-sm mt-10 ">
       <h1 id="trending" className="text-xl font-bold mb-2">
         Trending Skills
       </h1>
