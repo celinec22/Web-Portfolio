@@ -140,10 +140,8 @@ export default function Home() {
             </div>
           </div>
           <div className="hidden lg:block w-1/2 p-4">
-            <div className="flex flex-col mt-20">
-              <div className="fixed top-20 h-[700px] mb-20">
-                <StockTable />
-              </div>
+            <div className="flex flex-col items-center fixed top-20 ml-20">
+              <StockTable />
             </div>
           </div>
         </div>

@@ -14,6 +14,7 @@ const projectRepoMap = {
     owner: "WarrenLaz",
     description:
       "A pill tracking app to remind users of their medication schedules.",
+    demo: "https://replenx-info.vercel.app/",
   },
   CRCBuilder: {
     repo: "CRC-Card-Builder",
@@ -26,17 +27,20 @@ const projectRepoMap = {
     repo: "mypass-manager",
     owner: "hebz26",
     description: "A password manager for securely storing login credentials.",
+    demo: "https://www.youtube.com/watch?v=TgCBUT-Td08",
   },
   NarcanVM: {
     repo: "narcan-alert",
     owner: "AliBdeir",
     description: "An app to generate and display Fibonacci sequences.",
+    demo: "https://www.narcanvm.com/",
   },
   ePortfolio: {
     repo: "Web-Portfolio",
     owner: "celinec22",
     description: "An online portfolio showcasing personal projects and skills.",
     code: "https://github.com/celinec22/Web-Portfolio",
+    demo: "https://celinec22.vercel.app",
   },
 };
 
@@ -45,11 +49,10 @@ const TableComponent = () => {
 
   const handleArrowClick = (projectName) => {
     setOpenProject(openProject === projectName ? null : projectName);
-    console.log(setOpenProject);
   };
 
   return (
-    <div className="overflow-auto w-full h-full rounded-sm border border-gray-600 overflow-y">
+    <div className="overflow-auto lg:w-[300px] lg:max-h-[650px] sm:w-full sm:h-full rounded-sm border border-gray-600">
       <table className="min-w-full bg-black text-gray-300 rounded-lg">
         <thead>
           <tr>
@@ -60,7 +63,10 @@ const TableComponent = () => {
         </thead>
         <tbody>
           {Object.entries(projectRepoMap).map(
-            ([displayName, { repo, owner, description }], index) => (
+            (
+              [displayName, { repo, owner, description, code, demo }],
+              index
+            ) => (
               <React.Fragment key={index}>
                 <tr className="border-t border-gray-600">
                   <td className="px-4 py-3 font-bold flex justify-between items-center">
@@ -75,7 +81,7 @@ const TableComponent = () => {
                       <span
                         className={
                           openProject === displayName
-                            ? "text-white-500"
+                            ? "text-white"
                             : "text-green-500"
                         }
                       >
@@ -91,18 +97,38 @@ const TableComponent = () => {
                         <p>{description}</p>
                       </td>
                     </tr>
-                    <tr>
-                      <td colSpan="3" className="px-4 py-2 bg-gray-800">
-                        <div className="space-y-2">
-                          <button className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900">
-                            Code
-                          </button>
-                          <button className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900">
-                            Demo
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                    {(code || demo) && (
+                      <tr>
+                        <td colSpan="3" className="px-4 py-2 bg-gray-800">
+                          <div className="space-y-2">
+                            {code && (
+                              <a
+                                href={code}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block w-full"
+                              >
+                                <button className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900">
+                                  Code
+                                </button>
+                              </a>
+                            )}
+                            {demo && (
+                              <a
+                                href={demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block w-full"
+                              >
+                                <button className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900">
+                                  Demo
+                                </button>
+                              </a>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
                   </>
                 )}
               </React.Fragment>
