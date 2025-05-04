@@ -95,10 +95,17 @@ export default function Dashboard() {
     let filtered = [];
     let pastDate = new Date();
 
-    if (range === "1W") pastDate.setDate(now.getDate() - 7);
-    else if (range === "1M") pastDate.setMonth(now.getMonth() - 1);
-    else if (range === "1Y") pastDate.setFullYear(now.getFullYear() - 1);
-    else pastDate = new Date("2024-01-01");
+    // Align to start of range
+    if (range === "1W") {
+      const day = now.getDay();
+      pastDate.setDate(now.getDate() - day);
+    } else if (range === "1M") {
+      pastDate = new Date(now.getFullYear(), now.getMonth(), 1);
+    } else if (range === "1Y") {
+      pastDate = new Date(now.getFullYear(), 0, 1);
+    } else {
+      pastDate = new Date("2024-01-01");
+    }
 
     filtered = data.filter((d) => new Date(d.date) >= pastDate);
     setFilteredData(filtered);
@@ -109,37 +116,43 @@ export default function Dashboard() {
       : 0;
     setTotalCommitsWithAnimation(currentTotal);
 
-    const pastTotal =
-      data.find((d) => d.date === pastDate.toISOString().substring(0, 10))
-        ?.commits || 0;
+    const pastEntry = [...data]
+      .reverse()
+      .find((d) => new Date(d.date) < pastDate);
+    const pastTotal = pastEntry ? pastEntry.commits : 0;
+
     setPercentageChange(((currentTotal - pastTotal) / (pastTotal || 1)) * 100);
   }
 
-  // Function to gradually update the total commits
   const setTotalCommitsWithAnimation = (newTotal) => {
-    const interval = 50;
-    const step = 1;
-    const diff = newTotal - prevTotalCommits;
+    cancelAnimationFrame(setTotalCommitsWithAnimation.frameId);
 
-    if (diff !== 0) {
-      let current = prevTotalCommits;
+    const duration = 300;
+    const startTime = performance.now();
+    const startValue = prevTotalCommits;
+    const change = newTotal - startValue;
 
-      const animate = () => {
-        current += Math.sign(diff) * step;
-        if (
-          (diff > 0 && current < newTotal) ||
-          (diff < 0 && current > newTotal)
-        ) {
-          setTotalCommits(current);
-          setTimeout(animate, interval);
-        } else {
-          setTotalCommits(newTotal);
-        }
-      };
+    const animate = (time) => {
+      const elapsed = time - startTime;
+      const progress = Math.min(elapsed / duration, 1);
 
-      animate();
-      setPrevTotalCommits(newTotal);
-    }
+      const eased =
+        progress < 0.5
+          ? 2 * progress * progress
+          : -1 + (4 - 2 * progress) * progress;
+
+      const current = Math.round(startValue + change * eased);
+      setTotalCommits(current);
+
+      if (progress < 1) {
+        setTotalCommitsWithAnimation.frameId = requestAnimationFrame(animate);
+      } else {
+        setTotalCommits(newTotal);
+        setPrevTotalCommits(newTotal);
+      }
+    };
+
+    setTotalCommitsWithAnimation.frameId = requestAnimationFrame(animate);
   };
 
   const handleHover = (commitValue) => {

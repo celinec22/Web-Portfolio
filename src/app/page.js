@@ -8,10 +8,11 @@ import Trending from "./components/Trending";
 import AboutMe from "./components/AboutMe";
 import Footer from "./components/Footer";
 import TopMoversCard from "./components/TopMoversCard";
+import LoadingPage from "./components/LoadingPage";
 
 export default function Home() {
   const [topRepos, setTopRepos] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchRepos() {
       const oneMonthAgo = new Date();
@@ -102,8 +103,12 @@ export default function Home() {
     }
 
     fetchRepos();
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   }, []);
 
+  if (loading) return <LoadingPage />;
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-full bg-black text-gray-300 font-capsule">
