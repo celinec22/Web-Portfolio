@@ -35,13 +35,6 @@ const projectRepoMap = {
     description: "An app to generate and display Fibonacci sequences.",
     demo: "https://www.narcanvm.com/",
   },
-  ePortfolio: {
-    repo: "Web-Portfolio",
-    owner: "celinec22",
-    description: "An online portfolio showcasing personal projects and skills.",
-    code: "https://github.com/celinec22/Web-Portfolio",
-    demo: "https://celinec22.vercel.app",
-  },
 };
 
 const TableComponent = () => {
